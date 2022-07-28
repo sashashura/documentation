@@ -8,13 +8,10 @@ code_lang: go
 type: multi-code-lang
 code_lang_weight: 30
 further_reading:
-    - link: 'tracing/manual_instrumentation'
+    - link: 'tracing/trace_collection/custom_instrumentation'
       tag: 'Documentation'
-      text: 'Instrument manually your application to create traces.'
-    - link: 'tracing/opentracing'
-      tag: 'Documentation'
-      text: 'Implement Opentracing across your applications.'
-    - link: 'tracing/visualization/'
+      text: 'Manually instrument your application to create traces.'
+    - link: 'tracing/glossary/'
       tag: 'Documentation'
       text: 'Explore your services, resources, and traces'
     - link: 'https://www.datadoghq.com/blog/request-log-correlation/'
@@ -50,7 +47,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 The above example illustrates how to use the span's context in the standard library's `log` package. Similar logic may be applied to 3rd party packages too.
 
-**Note**: If you are not using a [Datadog Log Integration][1] to parse your logs, custom log parsing rules need to ensure that `dd.trace_id`, `dd.span_id`, `dd.service`, `dd.env` and `dd.version` are being parsed as strings. More information can be found in the [FAQ on this topic][2].
+**Note**: If you are not using a [Datadog Log Integration][1] to parse your logs, custom log parsing rules need to ensure that `dd.trace_id`, `dd.span_id`, `dd.service`, `dd.env` and `dd.version` are being parsed as strings. More information can be found in [Correlated Logs Not Showing Up in the Trace ID Panel][2].
 
 ## Further Reading
 
@@ -58,4 +55,4 @@ The above example illustrates how to use the span's context in the standard libr
 
 
 [1]: /logs/log_collection/go/#configure-your-logger
-[2]: /tracing/faq/why-cant-i-see-my-correlated-logs-in-the-trace-id-panel/?tab=custom
+[2]: /tracing/troubleshooting/correlated-logs-not-showing-up-in-the-trace-id-panel/?tab=custom

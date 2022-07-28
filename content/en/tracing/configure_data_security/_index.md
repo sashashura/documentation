@@ -26,6 +26,7 @@ Datadog enforces several filtering mechanisms on spans as a baseline, to provide
 
 * **Environment variables are not collected by the Agent**
 * **SQL variables are obfuscated, even when not using prepared statements**: For example, the following `sql.query` attribute: `SELECT data FROM table WHERE key=123 LIMIT 10` has its variables obfuscated, to become the following Resource name: `SELECT data FROM table WHERE key = ? LIMIT ?`
+* **SQL strings are identified using standard ANSI SQL quotes**: This means strings should be surrounded in single quotes (`'`). Some SQL variants optionally support double-quotes (`"`) for strings, but most treat double-quoted things as identifiers. The Datadog obfuscator treats these as identifiers rather than strings and does not obfuscate them.
 * **Numbers in Resource names (for example, request URLs) are obfuscated** For example, the following `elasticsearch` attribute:
 
     ```text
@@ -75,7 +76,7 @@ apm_config:
 
 * `keep_values` - defines a set of keys to exclude from Agent trace obfuscation.
 
-[1]: /tracing/visualization/#spans
+[1]: /tracing/glossary/#spans
 {{% /tab %}}
 {{% tab "ElasticSearch" %}}
 
@@ -98,7 +99,7 @@ apm_config:
         - product_id
 ```
 
-[1]: /tracing/visualization/#spans
+[1]: /tracing/glossary/#spans
 {{% /tab %}}
 {{% tab "Redis" %}}
 
@@ -115,7 +116,7 @@ apm_config:
       enabled: true
 ```
 
-[1]: /tracing/visualization/#spans
+[1]: /tracing/glossary/#spans
 {{% /tab %}}
 {{% tab "MemCached" %}}
 
@@ -132,7 +133,7 @@ apm_config:
       enabled: true
 ```
 
-[1]: /tracing/visualization/#spans
+[1]: /tracing/glossary/#spans
 {{% /tab %}}
 {{% tab "Http" %}}
 
@@ -154,7 +155,7 @@ apm_config:
 * `remove_paths_with_digits`: If true, path segments in URLs containing digits are replaced by "?".
 
 
-[1]: /tracing/visualization/#spans
+[1]: /tracing/glossary/#spans
 {{% /tab %}}
 {{% tab "Stack Traces" %}}
 
@@ -175,23 +176,7 @@ apm_config:
 
 ## HTTP data collected
 
-Datadog is standardizing the tags collected for web spans across the supported tracing libraries. Check your library's release notes to see if it has implemented collecting these tags. For fully standardized libraries, the following tags are collected for each server side web span:
-
-*  `http.status_code` - The request's response status code.
-*  `http.method` - The method or HTTP verb.
-*  `http.version` - The protocol version.
-*  `http.url` - The full URL, including the obfuscated query string. For details of the obfuscation see below.
-*  `http.useragent` - The browser's user agent field, if available.
-*  `http.server_name` - The primary server name of the matched host or virtual host.
-*  `http.route` - The matched route (path template).
-*  `http.client_ip` - The IP address of the original client behind all proxies, if known. Discovered from headers such as `X-Forwarded-For`.
-*  `http.request.content_length` - The size of the request payload body in bytes.
-*  `http.request.content_length_uncompressed` - The size of the uncompressed request payload body after transport decoding.
-*  `http.request.headers.*` - The request HTTP headers. None are collected by default, but you can optionally configure them.
-*  `http.response.content_length` - The size of the response payload body in bytes.
-*  `http.response.content_length_uncompressed` - The size of the uncompressed response payload body after transport decoding.
-*  `http.response.headers.*` - The response HTTP headers. None are collected by default, but you can optionally configure them.
-
+Datadog is standardizing the tags collected for web spans across the supported tracing libraries. Check your library's release notes to see if it has implemented collecting these tags. For fully standardized libraries, see [Span Tags Semantics][11].
 
 ### Configuring a client IP header
 
@@ -331,12 +316,13 @@ While this page deals with modifying data once it has reached the Datadog Agent,
 
 
 [1]: /help/
-[2]: /tracing/visualization/#trace
-[3]: /tracing/visualization/#spans
+[2]: /tracing/glossary/#trace
+[3]: /tracing/glossary/#spans
 [4]: /agent/guide/agent-configuration-files/#agent-main-configuration-file
 [5]: /tracing/guide/ignoring_apm_resources/
 [6]: /agent/docker/apm/?tab=standard#docker-apm-agent-environment-variables
 [7]: /tracing/guide/send_traces_to_agent_by_api/
-[8]: /tracing/setup_overview/custom_instrumentation/java/#extending-tracers
-[9]: /tracing/setup_overview/custom_instrumentation/ruby/?tab=activespan#post-processing-traces
+[8]: /tracing/trace_collection/custom_instrumentation/java/#extending-tracers
+[9]: /tracing/trace_collection/custom_instrumentation/ruby/?tab=activespan#post-processing-traces
 [10]: https://ddtrace.readthedocs.io/en/stable/advanced_usage.html#trace-filtering
+[11]: /tracing/trace_collection/tracing_naming_convention/#http-requests

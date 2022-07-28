@@ -183,9 +183,6 @@ Datadog uses the distributed tracing protocol and sets up the following HTTP hea
 `x-datadog-sampling-priority: 1`
 : To make sure that the Agent keeps the trace.
 
-`x-datadog-sampled: 1`
-: Generated from the Real User Monitoring SDK. Indicates this request is selected for sampling.
-
 **Note**: These HTTP headers are not CORS-safelisted, so you need to [configure Access-Control-Allow-Headers][16] on your server handling requests that the SDK is set up to monitor. The server must also accept [preflight requests][17] (OPTIONS requests), which are made by the SDK prior to every request.
 
 ## How are APM quotas affected?
@@ -199,21 +196,21 @@ These traces are available for 15 minutes in the [Live Search][18] explorer. To 
 {{< partial name="whats-next/whats-next.html" >}}
 
 [1]: /tracing
-[2]: /tracing/setup_overview/setup/python/
+[2]: /tracing/trace_collection/dd_libraries/python/
 [3]: https://github.com/DataDog/dd-trace-py/releases/tag/v0.22.0
-[4]: /tracing/setup_overview/setup/go/
+[4]: /tracing/trace_collection/dd_libraries/go/
 [5]: https://github.com/DataDog/dd-trace-go/releases/tag/v1.10.0
-[6]: /tracing/setup_overview/setup/java/
+[6]: /tracing/trace_collection/dd_libraries/java/
 [7]: https://github.com/DataDog/dd-trace-java/releases/tag/v0.24.1
-[8]: /tracing/setup_overview/setup/ruby/
+[8]: /tracing/trace_collection/dd_libraries/ruby/
 [9]: https://github.com/DataDog/dd-trace-rb/releases/tag/v0.20.0
-[10]: /tracing/setup_overview/setup/nodejs/
+[10]: /tracing/trace_collection/dd_libraries/nodejs/
 [11]: https://github.com/DataDog/dd-trace-js/releases/tag/v0.10.0
-[12]: /tracing/setup_overview/setup/php/
+[12]: /tracing/trace_collection/dd_libraries/php/
 [13]: https://github.com/DataDog/dd-trace-php/releases/tag/0.33.0
-[14]: /tracing/setup_overview/setup/dotnet-core/
+[14]: /tracing/trace_collection/dd_libraries/dotnet-core/
 [15]: https://github.com/DataDog/dd-trace-dotnet/releases/tag/v1.18.2
 [16]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Headers
 [17]: https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request
 [18]: /tracing/trace_explorer/#live-search-for-15-minutes
-[19]: /tracing/trace_retention/#retention-filters
+[19]: /tracing/trace_pipeline/trace_retention/#retention-filters

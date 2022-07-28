@@ -8,13 +8,10 @@ code_lang: php
 type: multi-code-lang
 code_lang_weight: 70
 further_reading:
-    - link: 'tracing/manual_instrumentation'
+    - link: 'tracing/trace_collection/custom_instrumentation'
       tag: 'Documentation'
-      text: 'Instrument manually your application to create traces.'
-    - link: 'tracing/opentracing'
-      tag: 'Documentation'
-      text: 'Implement Opentracing across your applications.'
-    - link: 'tracing/visualization/'
+      text: 'Manually instrument your application to create traces.'
+    - link: 'tracing/glossary/'
       tag: 'Documentation'
       text: 'Explore your services, resources, and traces'
     - link: 'https://www.datadoghq.com/blog/request-log-correlation/'
@@ -38,7 +35,7 @@ Note that the function <code>\DDTrace\current_context()</code> has been introduc
 
 To connect your logs and traces together, your logs must contain the `dd.trace_id` and `dd.span_id` attributes that respectively contain your trace ID and your span ID.
 
-If you are not using a [Datadog Log Integration][1] to parse your logs, custom log parsing rules need to ensure that `dd.trace_id` and `dd.span_id` are being parsed as strings and remapped thanks to the [Trace Remapper][2]. More information can be found in the [Why can't I see my correlated logs in the Trace ID panel?][3] FAQ.
+If you are not using a [Datadog Log Integration][1] to parse your logs, custom log parsing rules need to ensure that `dd.trace_id` and `dd.span_id` are being parsed as strings and remapped thanks to the [Trace Remapper][2]. More information can be found in [Correlated Logs Not Showing Up in the Trace ID Panel][3].
 
 For instance, you would append those two attributes to your logs with:
 
@@ -92,5 +89,5 @@ If your application uses json logs format instead of appending trace_id and span
 
 [1]: /logs/log_collection/php/
 [2]: /logs/log_configuration/processors/#trace-remapper
-[3]: /tracing/faq/why-cant-i-see-my-correlated-logs-in-the-trace-id-panel/?tab=custom
+[3]: /tracing/troubleshooting/correlated-logs-not-showing-up-in-the-trace-id-panel/?tab=custom
 [4]: https://github.com/Seldaek/monolog

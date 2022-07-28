@@ -8,13 +8,10 @@ code_lang: dotnet
 type: multi-code-lang
 code_lang_weight: 60
 further_reading:
-    - link: 'tracing/manual_instrumentation'
+    - link: 'tracing/trace_collection/custom_instrumentation'
       tag: 'Documentation'
-      text: 'Instrument manually your application to create traces.'
-    - link: 'tracing/opentracing'
-      tag: 'Documentation'
-      text: 'Implement Opentracing across your applications.'
-    - link: 'tracing/visualization/'
+      text: 'Manually instrument your application to create traces.'
+    - link: 'tracing/glossary/'
       tag: 'Documentation'
       text: 'Explore your services, resources, and traces'
     - link: 'https://www.datadoghq.com/blog/request-log-correlation/'
@@ -55,7 +52,7 @@ To automatically inject correlation identifiers into your log messages:
 
 2. Enable auto-instrumentation tracing of your app by following the [instructions to install the .NET Tracer][1].
 
-[1]: https://docs.datadoghq.com/tracing/setup_overview/setup/dotnet-core/
+[1]: https://docs.datadoghq.com/tracing/trace_collection/dd_libraries/dotnet-core/
 {{% /tab %}}
 {{% tab "log4net" %}}
 
@@ -99,7 +96,7 @@ To automatically inject correlation identifiers into your log messages:
 For additional examples, see [the log4net automatic trace ID injection project][2] on GitHub.
 
 
-[1]: https://docs.datadoghq.com/tracing/setup_overview/setup/dotnet-core/
+[1]: https://docs.datadoghq.com/tracing/trace_collection/dd_libraries/dotnet-core/
 [2]: https://github.com/DataDog/dd-trace-dotnet/blob/master/tracer/samples/AutomaticTraceIdInjection/Log4NetExample/log4net.config
 {{% /tab %}}
 {{% tab "NLog" %}}
@@ -143,7 +140,7 @@ For NLog version 4.5:
 For additional examples, see the automatic trace ID injection projects using [NLog 4.0][2], [NLog 4.5][3], or [NLog 4.6][4] on GitHub.
 
 
-[1]: https://docs.datadoghq.com/tracing/setup_overview/setup/dotnet-core/
+[1]: https://docs.datadoghq.com/tracing/trace_collection/dd_libraries/dotnet-core/
 [2]: https://github.com/DataDog/dd-trace-dotnet/blob/master/tracer/samples/AutomaticTraceIdInjection/NLog40Example/NLog.config
 [3]: https://github.com/DataDog/dd-trace-dotnet/blob/master/tracer/samples/AutomaticTraceIdInjection/NLog45Example/NLog.config
 [4]: https://github.com/DataDog/dd-trace-dotnet/blob/master/tracer/samples/AutomaticTraceIdInjection/NLog46Example/NLog.config
@@ -179,7 +176,7 @@ If there is an active trace when the log is being written, trace and span IDs ar
 For additional examples, see [the Microsoft.Extensions.Logging automatic trace id injection project][5] on GitHub.
 
 
-[1]: https://docs.datadoghq.com/tracing/setup_overview/setup/dotnet-core/
+[1]: https://docs.datadoghq.com/tracing/trace_collection/dd_libraries/dotnet-core/
 [2]: https://docs.microsoft.com/aspnet/core/fundamentals/logging/#log-scopes-1
 [3]: https://github.com/serilog/serilog-extensions-hosting
 [4]: https://github.com/serilog/serilog-extensions-logging
@@ -197,7 +194,7 @@ The final step to enable automatic correlation identifier injection is to:
 
 After configuring the correlation identifier injection, see [C# Log Collection][7] to configure your log collection.
 
-**Note:** To correlate traces with logs, you might need to set up a [trace ID remapper][8] to parse `dd_trace_id` as the log's trace ID. See [correlated logs in the Trace ID panel][9] for more information.
+**Note:** To correlate traces with logs, you might need to set up a [trace ID remapper][8] to parse `dd_trace_id` as the log's trace ID. See [Correlated Logs Not Showing Up in the Trace ID Panel][9] for more information.
 
 ## Manual injection
 
@@ -212,7 +209,7 @@ If you prefer to manually correlate your traces with your logs, you can add corr
   | `dd.span_id`   | Active span ID during the log statement. Defaults to `0` if no trace. |
 
 
-**Note:** If you are not using a [Datadog Log Integration][7] to parse your logs, custom log parsing rules must parse `dd.trace_id` and `dd.span_id` as strings. For information, see the [FAQ on this topic][10].
+**Note:** If you are not using a [Datadog Log Integration][7] to parse your logs, custom log parsing rules must parse `dd.trace_id` and `dd.span_id` as strings. For information, see [Correlated Logs Not Showing Up in the Trace ID Panel][10].
 
 **Note**: If you are using Serilog, Nlog or log4net through ILogger, see the Microsoft.Extensions.Logging section to configure these properties using `BeginScope()`.
 
@@ -339,11 +336,11 @@ Ensure that log collection is configured in the Datadog Agent and that the [Logs
 [3]: https://logging.apache.org/log4net
 [4]: http://nlog-project.org
 [5]: https://docs.microsoft.com/en-us/dotnet/core/extensions/logging
-[6]: /tracing/setup_overview/setup/dotnet-core/#configuring-the-net-tracer
+[6]: /tracing/trace_collection/library_config/dotnet-core/#configuring-the-net-tracer
 [7]: /logs/log_collection/csharp/
 [8]: /logs/log_configuration/processors/?tab=ui#trace-remapper
-[9]: /tracing/faq/why-cant-i-see-my-correlated-logs-in-the-trace-id-panel/?tab=withlogintegration
-[10]: /tracing/faq/why-cant-i-see-my-correlated-logs-in-the-trace-id-panel/?tab=custom
+[9]: /tracing/troubleshooting/correlated-logs-not-showing-up-in-the-trace-id-panel/?tab=withlogintegration
+[10]: /tracing/troubleshooting/correlated-logs-not-showing-up-in-the-trace-id-panel/?tab=custom
 [11]: https://www.nuget.org/packages/Datadog.Trace/
 [12]: https://nblumhardt.com/2016/11/ilogger-beginscope/
 [13]: https://github.com/NLog/NLog.Extensions.Logging/wiki/NLog-properties-with-Microsoft-Extension-Logging
