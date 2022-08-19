@@ -221,7 +221,7 @@
   - repo_name: datadog-serverless-functions
     contents:
     - action: pull-and-push-file
-      branch: master
+      branch: docs3898/update-aws-tile-references
       globs:
       - 'aws/logs_monitoring/README.md'
       options:
