@@ -3800,6 +3800,7 @@ components:
       - dbm_hosts_usage
       - dbm_queries_usage
       - estimated_indexed_logs_usage
+      - estimated_ingested_logs_usage
       - estimated_indexed_spans_usage
       - estimated_ingested_spans_usage
       - fargate_usage
@@ -3826,6 +3827,7 @@ components:
       - DBM_HOSTS_USAGE
       - DBM_QUERIES_USAGE
       - ESTIMATED_INDEXED_LOGS_USAGE
+      - ESTIMATED_INGESTED_LOGS_USAGE
       - ESTIMATED_INDEXED_SPANS_USAGE
       - ESTIMATED_INGESTED_SPANS_USAGE
       - FARGATE_USAGE
@@ -5676,12 +5678,16 @@ components:
       x-enum-varnames:
       - USER_AGENT_PARSER
     MetricContentEncoding:
+      default: deflate
       description: HTTP header used to compress the media-type.
       enum:
       - deflate
+      - gzip
+      example: deflate
       type: string
       x-enum-varnames:
       - DEFLATE
+      - GZIP
     MetricMetadata:
       description: Object with all metric related metadata.
       properties:
@@ -7051,6 +7057,8 @@ components:
       - dbm_queries_usage
       - estimated_indexed_logs_usage
       - estimated_indexed_logs_percentage
+      - estimated_ingested_logs_usage
+      - estimated_ingested_logs_percentage
       - estimated_indexed_spans_usage
       - estimated_indexed_spans_percentage
       - estimated_ingested_spans_usage
@@ -7102,6 +7110,8 @@ components:
       - DBM_QUERIES_USAGE
       - ESTIMATED_INDEXED_LOGS_USAGE
       - ESTIMATED_INDEXED_LOGS_PERCENTAGE
+      - ESTIMATED_INGESTED_LOGS_USAGE
+      - ESTIMATED_INGESTED_LOGS_PERCENTAGE
       - ESTIMATED_INDEXED_SPANS_USAGE
       - ESTIMATED_INDEXED_SPANS_PERCENTAGE
       - ESTIMATED_INGESTED_SPANS_USAGE
@@ -7195,6 +7205,16 @@ components:
         estimated_indexed_spans_usage:
           description: The estimated indexed spans usage by tag(s). This field is
             in private beta.
+          format: double
+          type: number
+        estimated_ingested_logs_percentage:
+          description: The percentage of estimated live ingested logs usage by tag(s).
+            This field is in private beta.
+          format: double
+          type: number
+        estimated_ingested_logs_usage:
+          description: The estimated live ingested logs usage by tag(s). This field
+            is in private beta.
           format: double
           type: number
         estimated_ingested_spans_percentage:
@@ -8114,8 +8134,8 @@ components:
         For monitors using Count queries, an empty monitor evaluation is treated as
         0 and is compared to the threshold conditions.
 
-        For monitor using any query type other than Count, for example Gauge or Rate,
-        the monitor shows the last known status.
+        For monitors using any query type other than Count, for example Gauge, Measure,
+        or Rate, the monitor shows the last known status.
 
         This option is only available for APM Trace Analytics, Audit Trail, CI, Error
         Tracking, Event, Logs, and RUM monitors.'
@@ -14153,6 +14173,8 @@ components:
       - lambda_invocations_percentage
       - estimated_indexed_logs_usage
       - estimated_indexed_logs_percentage
+      - estimated_ingested_logs_usage
+      - estimated_ingested_logs_percentage
       - estimated_indexed_spans_usage
       - estimated_indexed_spans_percentage
       - estimated_ingested_spans_usage
@@ -14183,6 +14205,8 @@ components:
       - LAMBDA_INVOCATIONS_PERCENTAGE
       - ESTIMATED_INDEXED_LOGS_USAGE
       - ESTIMATED_INDEXED_LOGS_PERCENTAGE
+      - ESTIMATED_INGESTED_LOGS_USAGE
+      - ESTIMATED_INGESTED_LOGS_PERCENTAGE
       - ESTIMATED_INDEXED_SPANS_USAGE
       - ESTIMATED_INDEXED_SPANS_PERCENTAGE
       - ESTIMATED_INGESTED_SPANS_USAGE
@@ -14223,6 +14247,8 @@ components:
       - dbm_queries_percentage
       - estimated_indexed_logs_usage
       - estimated_indexed_logs_percentage
+      - estimated_ingested_logs_usage
+      - estimated_ingested_logs_percentage
       - appsec_usage
       - appsec_percentage
       - estimated_indexed_spans_usage
@@ -14264,6 +14290,8 @@ components:
       - DBM_QUERIES_PERCENTAGE
       - ESTIMATED_INDEXED_LOGS_USAGE
       - ESTIMATED_INDEXED_LOGS_PERCENTAGE
+      - ESTIMATED_INGESTED_LOGS_USAGE
+      - ESTIMATED_INGESTED_LOGS_PERCENTAGE
       - APPSEC_USAGE
       - APPSEC_PERCENTAGE
       - ESTIMATED_INDEXED_SPANS_USAGE
@@ -14423,6 +14451,16 @@ components:
             is in private beta.
           format: double
           type: number
+        estimated_ingested_logs_percentage:
+          description: The percentage of estimated live ingested logs usage by tag(s).
+            Note this field is in private beta.
+          format: double
+          type: number
+        estimated_ingested_logs_usage:
+          description: The estimated live ingested logs usage by tag(s). Note this
+            field is in private beta.
+          format: double
+          type: number
         estimated_ingested_spans_percentage:
           description: The percentage of estimated ingested spans usage by tag(s).
             Note this field is in private beta.
@@ -14574,6 +14612,9 @@ components:
           description: Shows usage aggregation for a billing period.
           format: double
           type: number
+        region:
+          description: The region of the organization.
+          type: string
         start_date:
           description: Shows the first date of usage.
           format: date-time
@@ -14829,6 +14870,12 @@ components:
         aas_host_count:
           description: The number of Cloud Security Posture Management Azure app services
             hosts during a given hour.
+          format: double
+          nullable: true
+          type: number
+        aws_host_count:
+          description: The number of Cloud Security Posture Management AWS hosts during
+            a given hour.
           format: double
           nullable: true
           type: number
@@ -15866,6 +15913,11 @@ components:
             Azure app services hosts over all hours in the current date for all organizations.
           format: int64
           type: integer
+        cspm_aws_host_top99p:
+          description: Shows the 99th percentile of all Cloud Security Posture Management
+            AWS hosts over all hours in the current date for all organizations.
+          format: int64
+          type: integer
         cspm_azure_host_top99p:
           description: Shows the 99th percentile of all Cloud Security Posture Management
             Azure hosts over all hours in the current date for all organizations.
@@ -16192,6 +16244,11 @@ components:
             org.
           format: int64
           type: integer
+        cspm_aws_host_top99p:
+          description: Shows the 99th percentile of all Cloud Security Posture Management
+            AWS hosts over all hours in the current date for the given org.
+          format: int64
+          type: integer
         cspm_azure_host_top99p:
           description: Shows the 99th percentile of all Cloud Security Posture Management
             Azure hosts over all hours in the current date for the given org.
@@ -16355,6 +16412,9 @@ components:
           type: integer
         public_id:
           description: The organization public id.
+          type: string
+        region:
+          description: The region of the organization.
           type: string
         rum_browser_and_mobile_session_count:
           description: Shows the sum of all mobile sessions and all browser lite and
@@ -16521,6 +16581,11 @@ components:
           description: Shows the 99th percentile of all Cloud Security Posture Management
             Azure app services hosts over all hours in the current months for all
             organizations.
+          format: int64
+          type: integer
+        cspm_aws_host_top99p_sum:
+          description: Shows the 99th percentile of all Cloud Security Posture Management
+            AWS hosts over all hours in the current months for all organizations.
           format: int64
           type: integer
         cspm_azure_host_top99p_sum:
