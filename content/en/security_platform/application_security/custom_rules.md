@@ -155,7 +155,7 @@ Real routes targeted for `your_service_name`.
 You can also use if-else logic to see if an attribute exists with the notation:
 
 ```
-{{#if @network.client.ip}}The attribute IP attribute exists.{{/if}}
+{{#if @network.client.ip}}The IP attribute exists.{{/if}}
 ```
 
 Or use if-else logic to see if an attribute matches a value:
