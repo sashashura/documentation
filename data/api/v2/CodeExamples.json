@@ -936,13 +936,6 @@
       "description": "Get hourly usage for Observability Pipelines returns \"OK\" response"
     }
   ],
-  "GetEstimatedCostByOrg": [
-    {
-      "group": "usage_metering",
-      "suffix": "_2734954020",
-      "description": "GetEstimatedCostByOrg with start_date returns \"OK\" response"
-    }
-  ],
   "CreateServiceAccount": [
     {
       "group": "users",
